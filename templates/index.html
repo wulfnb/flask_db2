@@ -1,0 +1,27 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Flask TODO App</title>
+  </head>
+  <body>
+    <h1>Tasks</h1>
+    <ul>
+      {% for task in tasks %}
+      <li>
+        {{ task['TITLE'] }} ({{ task['DESCRIPTION'] }})- {% if task['DONE'] %}done{% else %}not done{% endif %}
+        <form action="{{ url_for('update', id=task['ID']) }}" method="post" style="display:inline">
+          {% if not task['DONE'] %}<button type="submit">Done</button>{% endif %}
+        </form>
+        <form action="{{ url_for('delete', id=task['ID']) }}" method="post" style="display:inline">
+          <button type="submit">Delete</button>
+        </form>
+      </li>
+      {% endfor %}
+    </ul>
+    <form action="{{ url_for('add') }}" method="post">
+      <input type="text" name="title" required>
+      <input type="text" name="description" required>
+      <button type="submit">Add Task</button>
+    </form>
+  </body>
+</html>
